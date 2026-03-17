@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Canvas Graphics</title>
+<style>
+    body {
+        background-color:#ddd;
+    }
+    canvas {
+        background-color: white;
+        border: 1px solid black;
+    }
+</style>
+<script>
+var canvas;
+var graphics;
+function draw() {
+    // tło
+    graphics.fillText("Hello World", 50, 50);
+    graphics.strokeRect(120,120, 300, 200);
+    graphics.fillStyle = "rgb(50,50,50)";
+
+    // romb
+    graphics.moveTo(130,200);
+    graphics.lineWidth = 3;
+    graphics.strokeStyle = "rgb(0,0,0)";
+    graphics.lineTo(180,270);
+    graphics.lineTo(230,200);
+    graphics.lineTo(180,130);
+    graphics.lineTo(130,200);
+    graphics.stroke();
+    graphics.fillStyle = "rgb(0,0,200)"
+    graphics.fill();
+
+    // oczy
+    graphics.beginPath();
+    graphics.fillStyle = "rgb(255,255,255)";
+    graphics.arc(155,190,10,0,2*Math.PI);
+    graphics.fill();
+    
+    graphics.beginPath();
+    graphics.fillStyle = "rgb(0,0,0)";
+    graphics.arc(155,190,5,0,2*Math.PI);
+    graphics.fill();
+
+    graphics.beginPath();
+    graphics.fillStyle = "rgb(255,255,255)";
+    graphics.arc(153,188,2,0,2*Math.PI);
+    graphics.fill();
+
+    graphics.beginPath();
+    graphics.fillStyle = "rgb(255,255,255)";
+    graphics.arc(205,190,10,0,2*Math.PI);
+    graphics.fill();
+    
+    graphics.beginPath();
+    graphics.fillStyle = "rgb(0,0,0)";
+    graphics.arc(205,190,5,0,2*Math.PI);
+    graphics.fill();
+
+    graphics.beginPath();
+    graphics.fillStyle = "rgb(255,255,255)";
+    graphics.arc(203,188,2,0,2*Math.PI);
+    graphics.fill();
+
+    // uśmiech
+    graphics.beginPath();
+    graphics.fillStyle = "rgb(0,0,0)";
+    graphics.moveTo(165, 225);
+    graphics.bezierCurveTo(175, 230, 185, 230 ,195, 225);
+    graphics.moveTo(165, 225);
+    graphics.bezierCurveTo(175, 240, 185, 240 ,195, 225);
+    graphics.fill();
+
+    // zęby
+    graphics.beginPath();
+    graphics.fillStyle = "rgb(255,255,255)";
+    graphics.fillRect(175,225,3,3);
+
+    graphics.beginPath();
+    graphics.fillRect(180,225,3,3);
+
+
+}
+function init() {
+canvas = document.getElementById("theCanvas");
+graphics = canvas.getContext("2d");
+draw();
+}
+</script>
+</head>
+<body onload="init()">
+    <h1>CS 424, Lab 2, Exercise 1</h1>
+<canvas id="theCanvas" width="640" height="480"></canvas>
+</body>
+</html

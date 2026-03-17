@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Canvas Graphics</title>
+<style>
+    body { 
+        background-color:#ddd; 
+    }
+    canvas { 
+        background-color: white; border: 1px solid black; 
+    }
+</style>
+
+<script>
+"use strict";
+
+var canvas;
+var graphics;
+
+function doClear() {
+    graphics.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function installMouseHandler() {
+
+    var dragging = false;
+
+    function doMouseDown(evt) {
+        if (dragging || evt.button != 0) return;
+
+        var r = canvas.getBoundingClientRect();
+        var x = evt.clientX - r.left;
+        var y = evt.clientY - r.top;
+
+        dragging = true;
+
+        document.addEventListener("mousemove", doMouseMove);
+        document.addEventListener("mouseup", doMouseUp);
+    }
+
+    function doMouseMove(evt) {
+        if (!dragging) return;
+
+        var r = canvas.getBoundingClientRect();
+        var x = evt.clientX - r.left;
+        var y = evt.clientY - r.top;
+
+        var colorChoice = Number(document.getElementById("colorChoice").value);
+        var shapeType = Number(document.getElementById("shapeType").value);
+
+        if (colorChoice === 0) {
+            graphics.fillStyle = "yellow";
+        } else {
+            graphics.fillStyle = "green";
+        }
+
+        switch (shapeType) {
+            case 0:
+                graphics.fillRect(x-20, y-20, 40, 40);
+                graphics.strokeRect(x-20, y-20, 40, 40);
+                break;
+
+            case 1:
+                graphics.beginPath();
+                graphics.moveTo(x, y-30);
+                graphics.lineTo(x+30, y);
+                graphics.lineTo(x, y+30);
+                graphics.lineTo(x-30, y);
+                graphics.closePath();
+                graphics.fill();
+                graphics.stroke();
+                break;
+        }
+    }
+
+    function doMouseUp() {
+        dragging = false;
+        document.removeEventListener("mousemove", doMouseMove);
+        document.removeEventListener("mouseup", doMouseUp);
+    }
+
+    canvas.addEventListener("mousedown", doMouseDown);
+}
+
+function init() {
+    canvas = document.getElementById("canvas");
+    graphics = canvas.getContext("2d");
+
+    installMouseHandler();
+    document.getElementById("clearButton").onclick = doClear;
+
+    graphics.fillStyle = "white";
+    graphics.fillRect(0,0,canvas.width,canvas.height);
+}
+</script>
+</head>
+
+<body onload="init()">
+
+<h2>Lab 2, Exercise 2: Mousing</h2>
+
+<p><b>Kolor:</b>
+<select id="colorChoice">
+    <option value="0" selected>Żółty</option>
+    <option value="1">Zielony</option>
+</select>
+</p>
+
+<div>
+<b>Rysowanie:</b>
+<select id="shapeType">
+    <option value="0">Kwadrat</option>
+    <option value="1">Romb</option>
+</select>
+</div>
+
+<div>
+<button type="button" id="clearButton">Clear</button>
+</div>
+
+<div id="canvasholder">
+<canvas id="canvas" width="800" height="600"></canvas>
+</div>
+</body>
+</html>
